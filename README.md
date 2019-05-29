@@ -1,8 +1,26 @@
+We've a slow code which is known to be very slow! We're going to benchmark it to find the fact!
+
+```cs
+public async Task<int> SlowCode()
+{
+     int finalResult = 0;
+            
+     for (int i = 0; i < 100; i++)
+     {
+          var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1").Invoke(this, new object[] { 1, 2 });
+          var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async").Invoke(this, new object[] { 1, 2 }));
+          finalResult += result1.Sum + result2.Sum;
+     }
+            
+     return finalResult;
+}
+```
+
 [SlowCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L28-L40) has reflection, uses Task instead of ValueTask. It also suffers from boxing and uses class intead of struct.
 
 I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L43-L55) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task. It also uses struct instead of class.
 
-SlowCode performs reflection and other bad codes 100 times, and each time it tooks 48.459 us.
+SlowCode performs reflection and other bad codes 100 times, and each time it only tooks 48.459 us.
 
 ``` ini
 
