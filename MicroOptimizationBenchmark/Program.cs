@@ -31,7 +31,7 @@ namespace MicroOptimizationBenchmark
 
             for (int i = 0; i < 100; i++)
             {
-                var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1").Invoke(this, new object[] { 1, 2 }); // reflection + boxing + class instead of struct + use Task instead of ValueTask
+                var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1").Invoke(this, new object[] { 1, 2 });
                 var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async").Invoke(this, new object[] { 1, 2 }));
                 finalResult += result1.Sum + result2.Sum;
             }
