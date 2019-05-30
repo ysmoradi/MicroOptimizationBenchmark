@@ -20,7 +20,7 @@ public async Task<int> SlowCode()
 
 I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L43-L55) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task. It also uses struct instead of class.
 
-SlowCode performs reflection and other bad codes 100 times, and each time it only tooks 48.459 us.
+SlowCode performs reflection and other bad codes 100 times, and every 100 iteration only tooks 48.459 us!
 
 ``` ini
 
