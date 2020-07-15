@@ -33,7 +33,7 @@ Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cor
 RunStrategy=Throughput
 ```
 
-|   Method |       Mean |     Error |    StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------- |-----------:|----------:|----------:|--------:|------:|------:|----------:|
-| SlowCode | 551.600 us | 4.7328 us | 3.9521 us | 13.6719 |     - |     - |   57675 B |
-| FastCode |   1.752 us | 0.0175 us | 0.0163 us |       - |     - |     - |         - |
+|   Method |       Mean |      Error |     StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------- |-----------:|-----------:|-----------:|--------:|------:|------:|----------:|
+| SlowCode | 565.852 us | 11.1719 us | 12.8655 us | 13.6719 |     - |     - |   57675 B |
+| FastCode |   1.447 us |  0.0101 us |  0.0095 us |       - |     - |     - |         - |

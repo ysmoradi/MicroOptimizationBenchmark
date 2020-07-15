@@ -30,13 +30,14 @@ namespace MicroOptimizationBenchmark
 
             for (int i = 0; i < 100; i++)
             {
-                var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1").Invoke(this, new object[] { 1, 2 });
-                var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async").Invoke(this, new object[] { 1, 2 }));
+                var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1")/*Reflection*/.Invoke(this, new object[] { 1, 2 /*Boxing*/ })/*Dynamic Dispath*/;
+                var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async")/*Reflection*/.Invoke(this, new object[] { 1, 2 /*Boxing*/ }))/*Dynamic Dispath*/;
+                // await without configure await false (I know console apps have no sync context!)
                 finalResult += result1.Sum + result2.Sum;
 
                 try
                 {
-                    throw new DivideByZeroException();
+                    throw new DivideByZeroException(); // exception
                 }
                 catch { }
             }
@@ -52,7 +53,7 @@ namespace MicroOptimizationBenchmark
             for (int i = 0; i < 100; i++)
             {
                 var result1 = Sum2(1, 2);
-                var result2 = await Sum2Async(1, 2);
+                var result2 = await Sum2Async(1, 2).ConfigureAwait(false);
                 finalResult += result1.Sum + result2.Sum;
             }
 
@@ -66,7 +67,7 @@ namespace MicroOptimizationBenchmark
 
         public async Task<ResultClass> Sum1Async(int n1, int n2)
         {
-            return new ResultClass { Sum = n1 + n2 };
+            return new ResultClass { Sum = n1 + n2 }; // use async-await instead of Task.FromResult
         }
 
         public ResultStruct Sum2(int n1, int n2)
@@ -74,9 +75,9 @@ namespace MicroOptimizationBenchmark
             return new ResultStruct { Sum = n1 + n2 };
         }
 
-        public async ValueTask<ResultStruct> Sum2Async(int n1, int n2)
+        public ValueTask<ResultStruct> Sum2Async(int n1, int n2)
         {
-            return new ResultStruct { Sum = n1 + n2 };
+            return new ValueTask<ResultStruct>(new ResultStruct { Sum = n1 + n2 });
         }
     }
 
