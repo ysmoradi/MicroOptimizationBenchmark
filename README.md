@@ -18,7 +18,7 @@ public async Task<int> SlowCode()
 
 [SlowCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L28-L40) has reflection, uses Task instead of ValueTask. It also suffers from boxing and uses class intead of struct.
 
-I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L43-L55) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task. It also uses struct instead of class.
+I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L43-L55) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task.
 
 SlowCode performs reflection and other bad codes 100 times, and every 100 iterations only took 48.459 us!
 
