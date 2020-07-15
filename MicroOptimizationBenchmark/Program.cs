@@ -2,7 +2,6 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Running;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace MicroOptimizationBenchmark
@@ -21,7 +20,7 @@ namespace MicroOptimizationBenchmark
         }
     }
 
-    [SimpleJob(RunStrategy.Throughput, invocationCount: 1_000_000)]
+    [SimpleJob(RunStrategy.Throughput), MemoryDiagnoser]
     public class Tests
     {
         [Benchmark]
@@ -34,6 +33,12 @@ namespace MicroOptimizationBenchmark
                 var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1").Invoke(this, new object[] { 1, 2 });
                 var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async").Invoke(this, new object[] { 1, 2 }));
                 finalResult += result1.Sum + result2.Sum;
+
+                try
+                {
+                    throw new DivideByZeroException();
+                }
+                catch { }
             }
 
             return finalResult;

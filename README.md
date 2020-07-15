@@ -20,20 +20,20 @@ public async Task<int> SlowCode()
 
 I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L43-L55) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task. It also uses struct instead of class.
 
-SlowCode performs reflection and other bad codes 100 times, and every 100 iterations only took 48.459 us!
+SlowCode performs reflection and other bad codes 100 times. It also throws an exception 100 times! Every 100 iterations only took 551.600 us!
 
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.329 (2004/?/20H1)
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.388 (2004/?/20H1)
 Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
 .NET Core SDK=5.0.100-preview.6.20318.15
   [Host]     : .NET Core 5.0.0 (CoreCLR 5.0.20.30506, CoreFX 5.0.20.30506), X64 RyuJIT
-  Job-MOOBGY : .NET Core 5.0.0 (CoreCLR 5.0.20.30506, CoreFX 5.0.20.30506), X64 RyuJIT
+  Job-JWLQUD : .NET Core 5.0.0 (CoreCLR 5.0.20.30506, CoreFX 5.0.20.30506), X64 RyuJIT
 
-InvocationCount=1000000  RunStrategy=Throughput
-
+RunStrategy=Throughput
 ```
-|   Method |      Mean |     Error |    StdDev |
-|--------- |----------:|----------:|----------:|
-| SlowCode | 44.546 us | 0.2011 us | 0.1783 us |
-| FastCode |  1.718 us | 0.0131 us | 0.0122 us |
+
+|   Method |       Mean |     Error |    StdDev |   Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------- |-----------:|----------:|----------:|--------:|------:|------:|----------:|
+| SlowCode | 551.600 us | 4.7328 us | 3.9521 us | 13.6719 |     - |     - |   57675 B |
+| FastCode |   1.752 us | 0.0175 us | 0.0163 us |       - |     - |     - |         - |
