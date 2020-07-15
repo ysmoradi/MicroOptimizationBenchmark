@@ -3,24 +3,29 @@ We've a slow code which is known to be very slow! We're going to benchmark it to
 ```cs
 public async Task<int> SlowCode()
 {
-     int finalResult = 0;
-            
-     for (int i = 0; i < 100; i++)
-     {
-          var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1").Invoke(this, new object[] { 1, 2 });
-          var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async").Invoke(this, new object[] { 1, 2 }));
-          finalResult += result1.Sum + result2.Sum;
-     }
-            
-     return finalResult;
+    int finalResult = 0;
+
+    for (int i = 0; i < 100; i++)
+    {
+        var result1 = (ResultClass)typeof(Tests).GetMethod("Sum1")/*Reflection*/.Invoke(this, new object[] { 1, 2 /*Boxing*/ })/*Dynamic Dispath*/;
+        var result2 = await ((Task<ResultClass>)typeof(Tests).GetMethod("Sum1Async")/*Reflection*/.Invoke(this, new object[] { 1, 2 /*Boxing*/ }))/*Dynamic Dispath*/;
+        // await without configure await false (I know console apps have no sync context!)
+        finalResult += result1.Sum + result2.Sum;
+
+        try
+        {
+            throw new DivideByZeroException(); // exception
+        }
+        catch { }
+    }
+
+    return finalResult;
 }
 ```
 
-[SlowCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L28-L40) has reflection, uses Task instead of ValueTask. It also suffers from boxing and uses class intead of struct.
+[SlowCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L29-L45) SlowCode performs reflection and other bad codes 100 times. It also throws an exception 100 times! Every 100 iterations only took 551.600 us!
 
-I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L43-L55) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task.
-
-SlowCode performs reflection and other bad codes 100 times. It also throws an exception 100 times! Every 100 iterations only took 551.600 us!
+I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L51-L60) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task.
 
 ``` ini
 

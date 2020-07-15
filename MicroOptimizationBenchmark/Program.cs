@@ -20,7 +20,7 @@ namespace MicroOptimizationBenchmark
         }
     }
 
-    [SimpleJob(RunStrategy.Throughput), MemoryDiagnoser]
+    [DryJob, MemoryDiagnoser]
     public class Tests
     {
         [Benchmark]
