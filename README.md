@@ -1,4 +1,4 @@
-We've a slow code which is known to be very slow! We're going to benchmark it to find the fact!
+We've a slow code which is known to be very slow! We've provided 1 benchmark + 1 load test to see how slow is that.
 
 ```cs
 public async Task<int> SlowCode()
@@ -25,7 +25,7 @@ public async Task<int> SlowCode()
 
 [SlowCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L29-L45) SlowCode performs reflection and other bad codes 100 times. It also throws an exception 100 times! Every 100 iterations only took 551.600 us!
 
-I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L51-L60) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task.
+I'm going to compare its performance with [FastCode](https://github.com/ysmoradi/MicroOptimizationBenchmark/blob/master/MicroOptimizationBenchmark/Program.cs#L51-L60) which uses struct instead of class, it uses direct method call instead of reflection and it uses ValueTask instead of Task and it doesn't throw an exception at all.
 
 ``` ini
 
@@ -45,7 +45,7 @@ RunStrategy=Throughput
 
 We also have fast api & slow api
 In slow api, we throws ResourceNotFoundException which gets mapped to 404 status code later in a middleware.
-There's also a fast api which simply returns Not found
+There's also a fast api which simply returns Not found. It also has the same middleware but for unknown exceptions. Developers are not intended to throw an exception in that aspnetcore app!
 
 Using https://github.com/rogerwelin/cassowary we achieved following results:
 
