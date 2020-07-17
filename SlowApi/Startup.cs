@@ -26,7 +26,7 @@ namespace SlowApi
             {
                 try
                 {
-                    await next().ConfigureAwait(false);
+                    await next();
                 }
                 catch (Exception exp)
                 {

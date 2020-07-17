@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace FastApi
 {
@@ -20,6 +21,18 @@ namespace FastApi
 
         public void Configure(IApplicationBuilder app)
         {
+            app.Use(async (cntx, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception exp)
+                {
+                    // shwo errors the way you want...
+                }
+            });
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
