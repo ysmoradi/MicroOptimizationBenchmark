@@ -42,3 +42,16 @@ RunStrategy=Throughput
 |--------- |-----------:|-----------:|-----------:|--------:|------:|------:|----------:|
 | SlowCode | 565.852 us | 11.1719 us | 12.8655 us | 13.6719 |     - |     - |   57675 B |
 | FastCode |   1.447 us |  0.0101 us |  0.0095 us |       - |     - |     - |         - |
+
+We also have fast api & slow api
+In slow api, we throws ResourceNotFoundException which gets mapped to 404 status code later in a middleware.
+There's also a fast api which simply returns Not found
+
+Using https://github.com/rogerwelin/cassowary we achieved following results:
+
+Fast: 10499.31 req/s
+Slow: 10050.26 req/s
+
+Note that in real world, api throws an exception rarely.
+And Api logic is more complicated than a simple return. For example they need authorization, authenticatin, database and cache access etc.
+So, this load test is testing worse case
