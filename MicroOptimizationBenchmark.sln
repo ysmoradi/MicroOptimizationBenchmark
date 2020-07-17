@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.28917.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroOptimizationBenchmark", "MicroOptimizationBenchmark\MicroOptimizationBenchmark.csproj", "{092035AC-95D0-450F-A127-213005CAFA8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastApi", "FastApi\FastApi.csproj", "{719732EB-C154-4086-BC5C-44B12D1495C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastApi", "FastApi\FastApi.csproj", "{719732EB-C154-4086-BC5C-44B12D1495C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowApi", "SlowApi\SlowApi.csproj", "{2CFAE91D-6578-41D3-8F95-570A44EED028}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A595B8FF-F1D8-4664-8FC6-A1A37A60E601}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

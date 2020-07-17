@@ -52,6 +52,8 @@ Using https://github.com/rogerwelin/cassowary we achieved following results:
 Fast: 10499.31 req/s
 Slow: 10050.26 req/s
 
-Note that in real world, api throws an exception rarely.
-And Api logic is more complicated than a simple return. For example they need authorization, authenticatin, database and cache access etc.
-So, this load test is testing worse case
+Note that in real world, api throws exceptions rarely, and api logic is more complicated than a simple return!
+For example api needs authorization, authenticatin, database and cache access etc.
+So, this load test is testing worse case!
+
+Note that I've tested these on Windows. Results might be different on Linux!
